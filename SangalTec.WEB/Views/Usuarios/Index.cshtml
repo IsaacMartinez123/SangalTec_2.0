@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SangalTec.Models.EntitiesUsers.Usuario>
+@section Styles{
+
+}
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .btn {
+        position: fixed;
+        right: 40px;
+    }
+</style>
+
+<br />
+<br />
+<br />
+<h2 class="text-md-center">
+    <b>@ViewBag.Titulo</b>
+</h2>
+<br />
+<br />
+<br />
+
+<div>
+    <a class="btn btn-success" asp-action="Crear">Crear Usuario <i class="fas fa-plus"></i></a>
+</div>
+<br />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="intro-y datatable-wrapper box p-3 mt-3">
+
+            <table id="tabla" class="table table-report table-report-bordered display datatable w-full">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UsuarioId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nombres)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Correo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumeroCelular)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Documento)
+                        </th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model)
+                    {
+                        <tr>
+                            <td>
+                                @usuario.UsuarioId
+                            </td>
+                            <td>
+                                @usuario.Nombres
+                            </td>
+                            <td>
+                                @usuario.Correo
+                            </td>
+                            <td>
+                                @usuario.NumeroCelular
+                            </td>
+                            <td>
+                                @usuario.Documento
+                            </td>
+                            <td>
+                                @if (usuario.Estado)
+                                {
+                                    <span class="text-theme-9"><i class="fas fa-check-square"></i>  activo</span>
+                                }
+                                else
+                                {
+                                    <span class="text-theme-6"><i class="far fa-check-square"></i>  Inactivo</span>
+                                }
+
+                            </td>
+                            <td>
+                                <a class="text-primary" asp-action="Edit" asp-route-id="@usuario.UsuarioId"><i title="Editar" class="fas fa-edit"></i></a> |
+                                <a class="text-info" asp-action="Details" asp-route-id="@usuario.UsuarioId"><i title="Detalle" class="fas fa-search"></i></a> |
+                                <a class="text-danger" asp-action="Delete" asp-route-id="@usuario.UsuarioId"><i title="Eliminar" class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts
+
+{
+    <script src="~/js/tabla.js"></script>
+}
