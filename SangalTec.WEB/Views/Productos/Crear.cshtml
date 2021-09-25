@@ -3,7 +3,7 @@
 @{ Layout = null; }
 
 
-    <form id="formulario" asp-action="Crear" enctype="multipart/form-data" autocomplete="off" onsubmit="return jQueryAjaxPost(this,'Crear producto', '¿Desea Crear el producto?');">
+    <form id="formulario" asp-action="Crear" enctype="multipart/form-data" autocomplete="on" onsubmit="return jQueryAjaxPost(this,'Crear producto', '¿Desea Crear el producto?');">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Nombre" class="crontrol-label"></label>
@@ -41,6 +41,6 @@
         </div>
     </form>
 
-
+    <script src="~/js/site.js"></script>
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

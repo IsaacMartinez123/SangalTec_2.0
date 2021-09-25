@@ -1,4 +1,5 @@
-﻿using SangalTec.Models.EntitiesUsers;
+﻿using SangalTec.Bunsiness.Dtos;
+using SangalTec.Models.EntitiesUsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace SangalTec.Bunsiness.Abstract
 {
     public interface IUsuarioBunsiness
     {
-        Task<IEnumerable<Usuario>> ObtenerUsuarios();
+        Task<UsuarioDto> ObtenerUsuarioDtoPorEmail(string email);
+        Task<string> Crear(RegistrarUsuarioDto registrarUsuarioDto);
+        Task<IEnumerable<UsuarioDto>> ObtenerListaUsuarios();
 
-        Task<Usuario> ObtenerUsuarioPorId(int? id);
+        Task<Usuario> ObtenerUsuarioPorId(string? id);
     }
 
 }

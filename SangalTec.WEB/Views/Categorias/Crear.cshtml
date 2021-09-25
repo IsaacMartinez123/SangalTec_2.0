@@ -3,7 +3,7 @@
 @{ Layout = null; }
 
 
-    <form id="formulario" asp-action="Crear" autocomplete="off" onsubmit="return jQueryAjaxPost(this,'Crear categoria', '¿Desea Crear la categoria?');">
+    <form id="formulario" asp-action="Crear" autocomplete="on" onsubmit="return jQueryAjaxPost(this,'Crear categoria', '¿Desea Crear la categoria?');">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Nombre" class="crontrol-label"></label>
@@ -19,5 +19,5 @@
             </div>
         </div>
     </form>
-
+    <script src="~/js/site.js"></script>
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

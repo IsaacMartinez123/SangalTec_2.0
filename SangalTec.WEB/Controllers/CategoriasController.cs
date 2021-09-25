@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SangalTec.Bunsiness.Abstract;
 using SangalTec.Models.Entities;
+using SangalTec.WEB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace SangalTec.WEB.Controllers
             return View(await _ICategoriaBunsiness.ObtenerCategoria());
         }
 
+        [NoDirectAccessAttribute]
+        [HttpGet]
         public IActionResult Crear()
         {
             ViewBag.Titulo = "Crear Categoría";
@@ -40,23 +43,48 @@ namespace SangalTec.WEB.Controllers
 
                     if (guardar)
                     {
-                        TempData["Accion"] = "Guardar";
-                        TempData["Mensaje"] = $"Se creo la categoria {categoria.Nombre}";
-                        return RedirectToAction("Index");
+                        return Json(new { isValid = true, operacion = "crear" });
                     }
+
+                    return Json(new { isValid = false, tipoError = "danger", error = "Error al crear el producto" });
                 }
                 catch (Exception)
                 {
 
-                    throw;
+                    return Json(new { isValid = false, tipoError = "danger", error = "Error al crear la categoria" });
                 }
                 
 
             }
 
-            TempData["Accion"] = "Validacion";
-            TempData["Mensaje"] = "Debe llenar los campos requeridos";
-            return View(categoria);
+            return Json(new { isValid = false, tipoError = "warning", error = "Debe diligenciar los campos requeridos", html = Helper.RenderRazorViewToString(this, "Crear", categoria) });
+
+        }
+
+        [NoDirectAccessAttribute]
+        public async Task<IActionResult> Detalle(int? id)
+        {
+            if (id != null)
+            {
+                try
+                {
+                    var producto = await _ICategoriaBunsiness.ObtenerCategoriaPorId(id);
+                    if (producto != null)
+                    {
+                        return View(producto);
+
+                    }
+                    return Json(new { isValid = false, tipoError = "error", mensaje = "Error interno" });
+
+                }
+                catch (Exception)
+                {
+
+                    return Json(new { isValid = false, tipoError = "error", mensaje = "Error interno" });
+                }
+
+            }
+            return Json(new { isValid = false, tipoError = "error", mensaje = "Error interno" });
         }
     }
 }

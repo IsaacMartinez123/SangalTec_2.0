@@ -33,7 +33,7 @@
                             <td>@categoria.Nombre</td>
                             <td>
                                 <a class="btn btn-success" asp-action="Editar"><i title="Editar" class="fas fa-edit"></i></a>
-                                <a class="btn btn-primary" asp-action="Detalle"><i class="fas fa-search"></i></a>
+                                <a class="btn btn-primary" href="javascript:mostrarModal('@Url.Action("Detalle","Categorias",new{id=categoria.CategoriaId},Context.Request.Scheme)','Detalle de la categoria')"><i class="fas fa-search"></i></a>
                                 <a class="btn btn-danger" asp-action="Editar"><i title="Eliminar" class="fas fa-trash-alt"></i></a>
                             </td>
 

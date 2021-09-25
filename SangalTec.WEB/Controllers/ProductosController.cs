@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SangalTec.Bunsiness.Abstract;
 using SangalTec.Models.Entities;
+using SangalTec.WEB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +32,8 @@ namespace SangalTec.WEB.Controllers
             return View(await _IProductoBunsiness.ObtenerProductos());
         }
 
+        [NoDirectAccessAttribute]
+        [HttpGet]
         public async Task<IActionResult> Crear()
         {
             ViewBag.Titulo = "Crear producto";
@@ -68,25 +71,25 @@ namespace SangalTec.WEB.Controllers
 
                         if (guardar)
                         {
-                            TempData["Accion"] = "Guardar";
-                            TempData["Mensaje"] = $"Se creó el producto: {producto.Nombre}";
-                            return RedirectToAction("Index");
+                         return Json(new { isValid = true, operacion = "crear" });
                         }
-                    
+
+                    return Json(new { isValid = false, tipoError = "danger", error = "Error al crear el producto" });
+
                 }
                 catch (Exception)
                 {
 
-                    throw;
+                    return Json(new { isValid = false, tipoError = "danger", error = "Error al crear el producto" });
                 }
             }
 
-            TempData["Accion"] = "Validacion";
-            TempData["Mensaje"] = "Debe llenar los campos requeridos";
             ViewBag.Categoria = new SelectList(await _ICategoriaBunsiness.ObtenerCategoria(), "CategoriaId", "Nombre");
-            return View(producto);
+
+            return Json(new { isValid = false, tipoError = "warning", error = "Debe diligenciar los campos requeridos", html = Helper.RenderRazorViewToString(this, "Crear", producto) });
         }
 
+        [NoDirectAccessAttribute]
         public async Task<IActionResult> Detalle(int? id)
         {
             if (id != null)

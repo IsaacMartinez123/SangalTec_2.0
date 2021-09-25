@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SangalTec.Models.Entities;
 using SangalTec.Models.EntitiesProvedor;
 using SangalTec.Models.EntitiesUsers;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SangalTec.DAL
 {
-    public class SangalDbContext:DbContext
+    public class SangalDbContext: IdentityDbContext
     {
         
             //opciones como la cadena de conexion 

@@ -33,6 +33,14 @@ namespace SangalTec.Bunsiness.Bunsiness
             _context.Add(categoria);
         }
 
+        public async Task<Categoria> ObtenerCategoriaPorId(int? id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
+            return await _context.Categorias.FirstOrDefaultAsync(x => x.CategoriaId == id);
+        }
+
         public async Task<bool> GuardarCambios()
         {
             return await _context.SaveChangesAsync() > 0;

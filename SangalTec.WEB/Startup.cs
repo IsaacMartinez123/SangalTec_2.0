@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using SangalTec.Bunsiness.Abstract;
 using SangalTec.DAL;
 using SangalTec.Bunsiness.Bunsiness;
+using SangalTec.Models.EntitiesUsers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SangalTec.WEB
 {
@@ -41,8 +44,29 @@ namespace SangalTec.WEB
             services.AddScoped<ICategoriaBunsiness, CategoriaBunsiness>();
 
             services.AddScoped<IProvedorBunsiness, ProvedorBunsiness>();
-            
+
+            //Indentity
+
+            services.AddIdentity<Usuario, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+              //.AddDefaultUI()
+              .AddDefaultTokenProviders() //para trabajar con la confirmaci�n de email
+              .AddEntityFrameworkStores<SangalDbContext>();
+            //.AddClaimsPrincipalFactory<UsuarioClaimsPrincipalFactory>();
+
+            //configuraci�n del password
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+                options.User.RequireUniqueEmail = true;
+            });
+
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -73,3 +97,4 @@ namespace SangalTec.WEB
         }
     }
 }
+

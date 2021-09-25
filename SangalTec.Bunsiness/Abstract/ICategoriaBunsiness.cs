@@ -13,6 +13,8 @@ namespace SangalTec.Bunsiness.Abstract
 
          void Crear(Categoria categoria);
 
+        Task<Categoria> ObtenerCategoriaPorId(int? id);
+
         Task<bool> GuardarCambios();
     }
 }
